@@ -1,0 +1,27 @@
+body {
+  margin-top: 40px;
+}
+
+@link-color: #e3ffc7;
+
+.basics-nav {
+  background-color: #7ece25;
+  .navbar-brand {
+    color: @link-color;
+  }
+  .navbar-nav {
+    li a {
+      color: @link-color;
+    }
+    .dropdown-menu {
+      a {
+        color: #000;
+      }
+    }
+  }
+}
+
+/* AngularJS */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
+}

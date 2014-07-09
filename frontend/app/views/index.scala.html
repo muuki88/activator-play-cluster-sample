@@ -1,0 +1,34 @@
+@()<!DOCTYPE html>
+<html>
+  <head>
+    <title data-ng-bind="pageTitle"></title>
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootswatch-yeti/css/bootstrap.css")" />
+    @*-- Add More CSS here -- *@
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/main.css")">
+    <script data-main="@routes.Assets.versioned("js/main.js")" type="text/javascript" src="@routes.Assets.versioned("lib/requirejs/require.js")"></script>
+  </head>
+  <body>
+    @*-- Header -- *@
+    <header class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Akka Dashboard</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Cluster</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </header>
+    @* -- Main Content -- *@
+    <div data-ng-view data-ng-cloak></div>
+  </body>
+</html>
