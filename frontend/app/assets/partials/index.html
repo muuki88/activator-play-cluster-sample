@@ -1,0 +1,47 @@
+<div class="jumobtron">
+    <div class="container">
+        <h1>Play and Akka Clusters</h1>
+        <p>This is a small play application that is connected with
+            an akka cluster. Make sure you started the cluster with
+        </p>
+        <pre>
+            <code>
+                sbt "project backend" "run 2551"
+                sbt "project backend" "run 2552"
+            </code>
+        </pre>
+        <p>
+            <a class="btn btn-primary btn-lg" role="button" href="#/dashboard">Dasbhoard »</a>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Cluster Dashboard</h2>
+            <p>The dashboard visualize the current cluster status.
+            Shows the state of different nodes and other metrics.
+            It's updated via a websocket, so just fire up another
+            cluster instance with <pre></code>sbt "project backend" run</pre></p>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Factorial Calculation</h2>
+            <p>You can start a factorial calculation for <em>x</em> times
+            on the cluster. You will see how many of the jobs are already
+            finished and how long everything took.</p>
+            <a href="#/services/factorial">Factorial »</a>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Thanks</h2>
+            This activator template is a mix of some inspiring other
+            templates. Make sure to checkout the 
+            <a href="http://typesafe.com/activator/template/play-angular-require-seed">"play angular require seed"</a>
+            template for the play part and the <a href=http://typesafe.com/activator/template/akka-sample-cluster-scala>
+            ""akka sample cluster in scala</a> for the akka part.
+        </div>
+    </div>
+
+</div>
