@@ -6,7 +6,7 @@ Building a play frontend for an akka cluster.
 
 ```
 sbt "project backend" "run 2551"
-sbt "project backend" "run 2551"
+sbt "project backend" "run 2552"
 sbt "project frontend" run
 ```
 
