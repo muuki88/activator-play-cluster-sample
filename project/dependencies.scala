@@ -11,7 +11,8 @@ object Dependencies {
     
     val common = Seq(
         "com.typesafe.akka" %% "akka-actor"   % Version.akka,
-        "com.typesafe.akka" %% "akka-cluster" % Version.akka
+        "com.typesafe.akka" %% "akka-cluster" % Version.akka,
+        "com.google.guava" % "guava" % "17.0"
     )
     
     val webjars = Seq(

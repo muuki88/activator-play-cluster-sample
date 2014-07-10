@@ -4,9 +4,6 @@ import models._
 
 import play.api._
 import play.api.mvc._
-import play.api.libs.json._
-import play.api.libs.json.Reads._
-import play.api.libs.functional.syntax._
 import play.api.cache._
 import play.api.Play.current
 
@@ -27,7 +24,8 @@ object Application extends Controller {
     Action { implicit request =>
       Ok(
         Routes.javascriptRouter(varName)(
-            routes.javascript.Monitor.websocket
+            routes.javascript.Monitor.websocket,
+            services.routes.javascript.Factorial.websocket
           // TODO Add your routes here
         )
       ).as(JAVASCRIPT)

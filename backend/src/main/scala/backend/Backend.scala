@@ -2,7 +2,11 @@ package backend
 
 import akka.actor._
 import com.typesafe.config.ConfigFactory
+import backend.factorial._
 
+/**
+ * Booting a cluster backend node with all actors
+ */
 object Backend extends App {
 
   // Simple cli parsing
@@ -18,4 +22,7 @@ object Backend extends App {
   val system = ActorSystem("application", (ConfigFactory parseProperties properties)
     .withFallback(ConfigFactory.load())
   )
+  
+  // Deploy actors and services
+  FactorialBackend startOn system
 }

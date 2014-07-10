@@ -3,18 +3,19 @@
 # ~~~~
 
 # Home page
-GET     /                       controllers.Application.index
+GET   /                         controllers.Application.index
 
 # JavaScript routes object
-GET     /jsroutes.js            controllers.Application.jsRoutes()
+GET   /jsroutes.js              controllers.Application.jsRoutes()
 
 # Routes used by Angular
 # ~~~~
 
-GET     /api/cluster/monitor    controllers.Monitor.websocket
+GET   /api/cluster/monitor      controllers.Monitor.websocket
+GET   /api/services/factorial   controllers.services.Factorial.websocket
 
 # Static
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file           controllers.Assets.versioned(path="/public", file: Asset)
+GET   /assets/*file             controllers.Assets.versioned(path="/public", file: Asset)

@@ -15,11 +15,17 @@ lazy val frontend = (project in file("frontend"))
         libraryDependencies ++= (Dependencies.frontend  ++ Seq(filters, cache)),
         pipelineStages := Seq(rjs, digest, gzip),
         RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:"))
-    )
+    ).dependsOn(api).aggregate(api)
 
 lazy val backend = (project in file("backend"))
     .settings(
         name := "backend",
+        libraryDependencies ++= Dependencies.backend
+    ).dependsOn(api).aggregate(api)
+    
+lazy val api = (project in file("api"))
+    .settings(
+        name := "api",
         libraryDependencies ++= Dependencies.backend
     )
 
