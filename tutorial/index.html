@@ -1,0 +1,118 @@
+<body>
+<div>
+    <h2>Akka Cluster Play Frontend</h2>
+
+    <p>
+        This is a small akka cluster application with a play frontend to show
+        <ul>
+            <li>The current cluster state</li>
+            <li>Start jobs in the cluster</li>
+        </ul>
+        
+        It is based on two other amazing activator templates. For the play part
+        I used the <a href="http://typesafe.com/activator/template/play-angular-require-seed">"play angular require seed"</a>
+        by Marious Soutier and for the backend part I used parts of the <a href=http://typesafe.com/activator/template/akka-sample-cluster-scala>
+        "akka sample cluster in scala"</a> template. Check these out if the docs on this one are sufficient enough.
+    </p>
+
+    <p>The tutorial is strucuture in the following way
+        <ul>
+            <li>Getting Started</li>
+            <li>Application Architecture</li>
+            <li>Cluster State Frontend</li>
+            <li>Factorial Frontend</li>
+        </ul>
+    </p>
+</div>
+
+<div>
+    <h2>Getting Started</h2>
+    
+    <p>
+        Open three terminals at the project root and run in each of them
+        one line of the following commands:
+        
+        <pre><code>sbt "project backend" "run 2551"
+sbt "project backend" "run 2552"
+sbt "project frontend" run</code></pre>
+        
+        The first two lines boot the cluster seed nodes. The last one starts the frontend,
+        which needs at least one seed node to be up and running to join the cluster.
+    </p>
+    
+    <p>Now go to <a href="http://localhost:9000">localhost:9000</a> and enjoy the frontend.
+       Every page is backed by a websocket, so you do not need to releoad any page, every!
+    <p>
+        If you want to fire up more cluster nodes, run this in a new terminal:
+        <pre><code>sbt "project backend" run</code></pre>
+    </p>
+    
+</div>
+
+
+<div>
+    <h2>Application Architecture</h2>
+    
+    <p> The application is split up in three subprojects.
+        <ul>
+            <li><em>api</em>: contains all messages which can be send by the <em>frontend</em> to the <em>backend</em></li>
+            <li><em>frontend</em>: playframework frontend. Depends on and aggregates the <em>api</em> project</li>
+            <li><em>backend</em>: the akka cluster node. Implements actors which can handle the messages defined in <em>api</em></li>
+        </ul>
+    </p>
+</div>
+
+<div>
+    <h2>Cluster State Frontend</h2>
+    
+    <p>
+        At <a href="http://localhost:9000/#/dashboard">localhost:9000/#/dashboard</a> you find a minimal dashboard,
+        which shows the current nodes available in the cluster. Open a new terminal and run:
+        <pre><code>sbt "project backend" run</code></pre>
+        After a short time you will see a new backend node appearing. If you kill that console, the nodes state
+        will change to <em>unreachable</em> and will then be removed.
+    </p>
+</div>
+
+<div>
+    <h2>Factorial Frontend</h2>
+    
+    <p>
+        This example demonstrates how to submit tasks to the cluster.
+        At <a href="http://localhost:9000/#/services/factorial">localhost:9000/#/services/factorial</a>
+        you can submit a factorial calculation n times to the cluster. On the right you see how many
+        factorials are already computed and how long it took.
+    </p>
+    
+    <p>
+        The backend implements the actual computation within the <em>factorial.Service.scala</em>.
+        The <em>WorkerActor</em> does the job and the <em>FactorialBackend</em> is just for creating
+        the backend actor, which is called by the frontend.
+    </p>
+    
+    <p>
+        The instantiation of the worker actors is done by the frontend. The piece of configuration
+        in the <em>application.conf</em> looks like this:
+        <pre><code>
+akka.actor.deployment {
+  /factorialService/factorialWorkerRouter = {
+    router = adaptive-group
+
+    metrics-selector = mix
+    nr-of-instances = 100
+    routees.paths = ["/user/factorialBackend"]
+    cluster {
+      enabled = on
+      use-role = backend
+      allow-local-routees = off
+    }
+  }
+}
+        </code><pre>
+    
+        The <em>factorialService</em> actor is register at startup time via the <em>Global.scala</em>.
+    </p>
+</div>
+
+
+</body>
