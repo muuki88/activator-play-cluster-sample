@@ -24,7 +24,8 @@ object Application extends Controller {
     Action { implicit request =>
       Ok(
         Routes.javascriptRouter(varName)(
-            routes.javascript.Monitor.websocket,
+            routes.javascript.Cluster.clusterNodesWebsocket,
+            routes.javascript.Cluster.clusterMetricsWebsocket,
             services.routes.javascript.Factorial.websocket
           // TODO Add your routes here
         )

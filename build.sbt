@@ -18,7 +18,11 @@ lazy val frontend = (project in file("frontend"))
 lazy val backend = (project in file("backend"))
     .settings(
         name := "backend",
-        libraryDependencies ++= Dependencies.backend
+        libraryDependencies ++= Dependencies.backend,
+        javaOptions in run ++= Seq(
+            "-Djava.library.path=./sigar",
+            "-Xms128m", "-Xmx1024m"),
+        fork in run := true
     ).dependsOn(api).aggregate(api)
     
 lazy val api = (project in file("api"))
