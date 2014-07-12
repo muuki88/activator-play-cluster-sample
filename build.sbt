@@ -1,12 +1,10 @@
 // TODO Set your organization here
-organization := "your.organization"
+organization in ThisBuild := "your.organization"
 
 // TODO Set your version here
 version := "1.0"
 
-// Scala Version, Play supports both 2.10 and 2.11
-//scalaVersion := "2.10.4"
-scalaVersion := "2.11.1"
+scalaVersion in ThisBuild := "2.11.1"
 
 lazy val frontend = (project in file("frontend"))
     .enablePlugins(PlayScala)
@@ -33,7 +31,7 @@ lazy val api = (project in file("api"))
 // Scala Compiler Options
 // If this project is only a subproject, add these to a common project setting.
 //
-scalacOptions ++= Seq(
+scalacOptions in ThisBuild ++= Seq(
   "-target:jvm-1.7",
   "-encoding", "UTF-8",
   "-deprecation", // warning and location for usages of deprecated APIs
