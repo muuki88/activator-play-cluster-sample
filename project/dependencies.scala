@@ -19,6 +19,7 @@ object Dependencies {
     "org.webjars" % "requirejs" % "2.1.11-1",
     "org.webjars" % "underscorejs" % "1.6.0-3",
     "org.webjars" % "jquery" % "1.11.1",
+    "org.webjars" % "d3js" % "3.4.9",
     "org.webjars" % "bootstrap" % "3.2.0" exclude ("org.webjars", "jquery"),
     "org.webjars" % "bootswatch-yeti" % "3.2.0" exclude ("org.webjars", "jquery"),
     "org.webjars" % "angularjs" % "1.2.16-2" exclude ("org.webjars", "jquery")

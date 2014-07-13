@@ -9,13 +9,14 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <table class="table table-striped table-hover">
                 <thead>
                     <th>System</th>
                     <th>Address</th>
                     <th>Port</th>
                     <th>Roles</th>
+                    <th>Heap (used)</th>
                     <th>State</th>
                 </thead>
                 <tbody>
@@ -26,6 +27,7 @@
                         <td>
                             <span ng-repeat="role in node.roles">{{role}} </span>
                         </td>
+                        <td>{{node.heap}}</td>
                         <td>
                             <span title="{{node.state}}"
                                 ng-class="{'glyphicon glyphicon-ok-sign': node.state == 'up', 'glyphicon glyphicon-question-sign': node.state == 'unreachable'}"></span>
@@ -36,22 +38,8 @@
             </table>
         </div>
 
-        <div class="col-lg-offset-2 col-lg-4">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <th>Node</th>
-                    <th>Heap</th>
-                    <th>Cpu</th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="node in nodes" ng-class="{'danger' : node.state == 'unreachable'}" title="{{node.address}}">
-                        <td>{{node.host}}:{{node.port}}</td>
-                        <td>{{node.heap}}</td>
-                        <td>{{node.cpu}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <barchart class="col-lg-offset-1 col-lg-6" data="metrics">
+        </barchart>
 
     </div>
 

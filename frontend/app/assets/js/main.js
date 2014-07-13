@@ -29,6 +29,7 @@
       'angular-route': ['../lib/angularjs/angular-route'],
       'angular-cookies': ['../lib/angularjs/angular-cookies'],
       'bootstrap': ['../lib/bootstrap/js/bootstrap'],
+      'd3' : ['../lib/d3js/d3'],
       'jsRoutes': ['/jsroutes']
     }
   });
@@ -38,7 +39,7 @@
   };
 
   // Load the app. This is kept minimal so it doesn't need much updating.
-  require(['angular', 'angular-cookies', 'angular-route', 'jquery', 'bootstrap', './app'],
+  require(['angular', 'angular-cookies', 'angular-route', 'jquery', 'bootstrap', 'd3', './app'],
     function (angular) {
       angular.bootstrap(document, ['app']);
     }

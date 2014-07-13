@@ -5,13 +5,16 @@ define([ 'underscore' ], function() {
   'use strict';
 
   var DashboardCtrl = function($scope, playRoutes) {
+    $scope.metrics = [];
+    $scope.nodes = [];
+    
     /** Creating the websocket to watch for cluster node changes */
     var clusterNodesSocketUrl = playRoutes.controllers.Cluster.clusterNodesWebsocket().webSocketUrl();
     var clusterNodesWS = new WebSocket(clusterNodesSocketUrl);
 
     /** Contains all the nodes */
     var nodes = {};
-
+    
     /**
      * This could be refactored into a nice angular service, but for the sake of
      * simplicity, we put it all in here
@@ -41,12 +44,21 @@ define([ 'underscore' ], function() {
           // node not available
         } else if(metric.name == 'heap') {
           node.heap = (metric.used / (1024 * 1024)).toFixed(2) + 'Mb';
+          node.heapUsed = metric.used;
         } else if(metric.name == 'cpu') {
           node.cpu = metric.cpuCombined;
         }
+        
+        // Setting metrics
+        $scope.metrics = _.values(nodes).map(function(node) {
+          return {
+            name : node.host + ':' + node.port,
+            value : (node.heapUsed || 0)
+          };
+        });
+        
       });
     };
-
   };
   DashboardCtrl.$inject = [ '$scope', 'playRoutes' ];
 
