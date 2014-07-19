@@ -5,6 +5,7 @@ import play.api.libs.json.JsValue
 import play.api.Play.current
 import actors._
 import actors.MetricsActor._
+import models.Metrics
 
 object Cluster extends Controller {
 
@@ -12,7 +13,7 @@ object Cluster extends Controller {
     MonitorActor.props(_)
   }
   
-  def clusterMetricsWebsocket = WebSocket.acceptWithActor[JsValue, MetricsActor.NodeMetric] { implicit request =>
+  def clusterMetricsWebsocket = WebSocket.acceptWithActor[JsValue, Metrics.NodeMetric] { implicit request =>
     MetricsActor.props(_)
   }
 }

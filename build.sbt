@@ -2,7 +2,7 @@
 organization in ThisBuild := "your.organization"
 
 // TODO Set your version here
-version := "1.0"
+version in ThisBuild := "1.0"
 
 scalaVersion in ThisBuild := "2.11.1"
 
@@ -20,8 +20,9 @@ lazy val backend = (project in file("backend"))
         name := "backend",
         libraryDependencies ++= Dependencies.backend,
         javaOptions in run ++= Seq(
-            "-Djava.library.path=./sigar",
+            "-Djava.library.path=./sigar", 
             "-Xms128m", "-Xmx1024m"),
+        // this enables custom javaOptions
         fork in run := true
     ).dependsOn(api).aggregate(api)
     

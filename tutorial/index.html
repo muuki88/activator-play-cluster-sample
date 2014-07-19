@@ -72,6 +72,22 @@ sbt "project frontend" run</code></pre>
         After a short time you will see a new backend node appearing. If you kill that console, the nodes state
         will change to <em>unreachable</em> and will then be removed.
     </p>
+    
+    <p>
+        This dashboard also includes some stats about the cluster, like memory consumption of each node.
+        These information are more accurate if you put the native sigar library on your classpath, which
+        is only available for the backend cluster.<br>
+        Take a look at the <a href=http://typesafe.com/activator/template/akka-sample-cluster-scala>akka-sample-cluster-scala</a>
+        activator to see how you can achieve this. The graph is rendered via d3js in a defined
+        angularjs directive (in <em>frontend/assets/js/dashboard/directives</em>). 
+    </p>
+    
+    <p>
+        Behind the scenes there are two websockets which update the data. 
+        The <em>MonitorActor</em> is responsible for the cluster state changes
+        and the <em>MetricsActor</em> for the cluster metric changes. You could
+        put them in one actor aswell, which listens for all the events.
+    </p>
 </div>
 
 <div>
@@ -112,6 +128,7 @@ akka.actor.deployment {
     
         The <em>factorialService</em> actor is register at startup time via the <em>Global.scala</em>.
     </p>
+    
 </div>
 
 <div>

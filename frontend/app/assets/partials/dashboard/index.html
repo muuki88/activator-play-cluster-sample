@@ -17,6 +17,7 @@
                     <th>Port</th>
                     <th>Roles</th>
                     <th>Heap (used)</th>
+                    <th>CPU (%)</th>
                     <th>State</th>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@
                             <span ng-repeat="role in node.roles">{{role}} </span>
                         </td>
                         <td>{{node.heap}}</td>
+                        <td>{{node.cpu}}</td>
                         <td>
                             <span title="{{node.state}}"
                                 ng-class="{'glyphicon glyphicon-ok-sign': node.state == 'up', 'glyphicon glyphicon-question-sign': node.state == 'unreachable'}"></span>
