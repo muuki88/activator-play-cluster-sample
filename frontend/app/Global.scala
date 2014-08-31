@@ -10,7 +10,7 @@ object Global extends WithFilters(new GzipFilter(shouldGzip =
     contentType.exists(_.startsWith("text/html")) || request.path.endsWith("jsroutes.js")
   }
 )) with GlobalSettings {
-  
+
   override def onStart(app: play.api.Application) {
     FactorialService startOn Akka.system(app)
   }

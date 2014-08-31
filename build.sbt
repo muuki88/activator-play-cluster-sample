@@ -1,3 +1,5 @@
+import com.typesafe.sbt.SbtAspectj._
+
 // TODO Set your organization here
 organization in ThisBuild := "your.organization"
 
@@ -31,6 +33,11 @@ lazy val api = (project in file("api"))
         name := "api",
         libraryDependencies ++= Dependencies.backend
     )
+    
+// For kamon monitoring
+aspectjSettings
+
+javaOptions <++= AspectjKeys.weaverOptions in Aspectj
 
 //
 // Scala Compiler Options
