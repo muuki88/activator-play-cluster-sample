@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   object Version {
-    val akka = "2.3.4"
+    val akka = "2.3.6"
   }
 
   lazy val frontend = common ++ webjars
