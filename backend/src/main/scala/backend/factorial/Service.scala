@@ -8,6 +8,7 @@ import akka.actor._
 import akka.pattern.pipe
 import akka.cluster.Cluster
 import akka.routing.FromConfig
+import akka.routing.RoundRobinPool
 import api.FactorialService._
 
 /**
@@ -37,7 +38,7 @@ class WorkerActor extends Actor with ActorLogging {
 object FactorialBackend {
 
   def startOn(system: ActorSystem) {
-    system.actorOf(Props[WorkerActor], name = "factorialBackend")
+    system.actorOf(Props[WorkerActor].withRouter(RoundRobinPool(100)), name = "factorialBackend")
   }
 
 }

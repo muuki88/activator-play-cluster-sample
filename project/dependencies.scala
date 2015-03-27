@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   object Version {
-    val akka = "2.3.6"
+    val akka = "2.3.9"
   }
 
   lazy val frontend = common ++ webjars
@@ -27,6 +27,11 @@ object Dependencies {
 
   val metrics = Seq(
     "org.fusesource" % "sigar" % "1.6.4"
+  )
+  
+  val tests = Seq(
+    "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+    "org.scalatestplus" %% "play" % "1.2.0" % "test"
   )
 
 }
