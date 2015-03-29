@@ -6,8 +6,8 @@ object Dependencies {
     val akka = "2.3.9"
   }
 
-  lazy val frontend = common ++ webjars
-  lazy val backend = common ++ metrics
+  lazy val frontend = common ++ webjars ++ tests
+  lazy val backend = common ++ metrics ++ tests
 
   val common = Seq(
     "com.typesafe.akka" %% "akka-actor" % Version.akka,
@@ -31,7 +31,8 @@ object Dependencies {
   
   val tests = Seq(
     "org.scalatest" %% "scalatest" % "2.2.4" % "test",
-    "org.scalatestplus" %% "play" % "1.2.0" % "test"
+    "org.scalatestplus" %% "play" % "1.2.0" % "test",
+    "com.typesafe.akka" %% "akka-testkit" % Version.akka % "test"
   )
 
 }

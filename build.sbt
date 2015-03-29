@@ -6,25 +6,32 @@ version in ThisBuild := "2.3.9"
 
 scalaVersion in ThisBuild := "2.11.6"
 
+lazy val root = (project in file("."))
+  .aggregate(api, frontend, backend)
+  
 lazy val frontend = (project in file("frontend"))
     .enablePlugins(PlayScala)
     .settings(
         name := "frontend",
         libraryDependencies ++= (Dependencies.frontend  ++ Seq(filters, cache)),
         pipelineStages := Seq(rjs, digest, gzip),
-        RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:"))
-    ).dependsOn(api).aggregate(api)
+        RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:")),
+        javaOptions ++= Seq(
+            "-Djava.library.path=" + (baseDirectory.value.getParentFile() / "backend" / "sigar" ).getAbsolutePath, 
+            "-Xms128m", "-Xmx1024m"),
+        fork in run := true
+    ).dependsOn(api)
 
 lazy val backend = (project in file("backend"))
     .settings(
         name := "backend",
         libraryDependencies ++= Dependencies.backend,
-        javaOptions in run ++= Seq(
-            "-Djava.library.path=./sigar", 
+        javaOptions ++= Seq(
+            "-Djava.library.path=" + (baseDirectory.value / "sigar").getAbsolutePath, 
             "-Xms128m", "-Xmx1024m"),
         // this enables custom javaOptions
         fork in run := true
-    ).dependsOn(api).aggregate(api)
+    ).dependsOn(api)
     
 lazy val api = (project in file("api"))
     .settings(
