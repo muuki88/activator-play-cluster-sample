@@ -1,42 +1,55 @@
-// TODO Set your organization here
-organization in ThisBuild := "your.organization"
-
-// TODO Set your version here
-version in ThisBuild := "2.3.9"
-
-scalaVersion in ThisBuild := "2.11.6"
+val commonSettings = Seq(
+  organization := "your.organization",
+  version := "2.3.9",
+  scalaVersion := "2.11.6",
+  
+  // build info
+  buildInfoPackage := "meta",
+  buildInfoKeys := Seq[BuildInfoKey](
+    name, version, scalaVersion,
+    "sbtNativePackager" -> "1.0.0-RC2"
+  )
+)
 
 lazy val root = (project in file("."))
+  .settings(
+    name := "play-akka-cluster"
+  )
   .aggregate(api, frontend, backend)
   
 lazy val frontend = (project in file("frontend"))
-    .enablePlugins(PlayScala)
+    .enablePlugins(PlayScala, BuildInfoPlugin)
     .settings(
-        name := "frontend",
+        name := "cluster-play-frontend",
         libraryDependencies ++= (Dependencies.frontend  ++ Seq(filters, cache)),
         pipelineStages := Seq(rjs, digest, gzip),
         RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:")),
         javaOptions ++= Seq(
             "-Djava.library.path=" + (baseDirectory.value.getParentFile() / "backend" / "sigar" ).getAbsolutePath, 
             "-Xms128m", "-Xmx1024m"),
-        fork in run := true
+        fork in run := true,
+        commonSettings
     ).dependsOn(api)
 
 lazy val backend = (project in file("backend"))
+    .enablePlugins(BuildInfoPlugin)
     .settings(
-        name := "backend",
+        name := "cluster-akka-backend",
         libraryDependencies ++= Dependencies.backend,
         javaOptions ++= Seq(
             "-Djava.library.path=" + (baseDirectory.value / "sigar").getAbsolutePath, 
             "-Xms128m", "-Xmx1024m"),
         // this enables custom javaOptions
-        fork in run := true
+        fork in run := true,
+        commonSettings
     ).dependsOn(api)
     
 lazy val api = (project in file("api"))
+    .enablePlugins(BuildInfoPlugin)
     .settings(
-        name := "api",
-        libraryDependencies ++= Dependencies.backend
+        name := "cluster-api",
+        libraryDependencies ++= Dependencies.backend,
+        commonSettings
     )
 
 //

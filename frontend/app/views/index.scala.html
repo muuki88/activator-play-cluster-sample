@@ -31,5 +31,16 @@
     </header>
     @* -- Main Content -- *@
     <div data-ng-view data-ng-cloak></div>
+    
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted pull-right">
+            <em>@meta.BuildInfo.name</em> with version 
+            <em>@meta.BuildInfo.version</em> running on 
+            <em>scala @meta.BuildInfo.scalaVersion</em></p>
+      </div>
+    </footer>
+    
   </body>
 </html>
