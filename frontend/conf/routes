@@ -11,9 +11,11 @@ GET   /jsroutes.js              controllers.Application.jsRoutes()
 # Routes used by Angular
 # ~~~~
 
+GET   /api/info                 controllers.BuildInfoController.info
 GET   /api/cluster/nodes        controllers.Cluster.clusterNodesWebsocket
 GET   /api/cluster/metrics      controllers.Cluster.clusterMetricsWebsocket
 GET   /api/services/factorial   controllers.services.Factorial.websocket
+
 
 # Static
 # ~~~~

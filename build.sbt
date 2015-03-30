@@ -5,6 +5,7 @@ val commonSettings = Seq(
   
   // build info
   buildInfoPackage := "meta",
+  buildInfoOptions += BuildInfoOption.ToJson,
   buildInfoKeys := Seq[BuildInfoKey](
     name, version, scalaVersion,
     "sbtNativePackager" -> "1.0.0-RC2"
