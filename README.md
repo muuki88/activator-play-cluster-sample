@@ -10,8 +10,8 @@ Building a play frontend for an akka cluster. The frontend provides
 Run each line in a new terminal.
 
 ```
-sbt "project backend" "run 2551"
-sbt "project backend" "run 2552"
+sbt "backend/run 2551"
+sbt "backend/run 2552"
 sbt "project frontend" run
 ```
 

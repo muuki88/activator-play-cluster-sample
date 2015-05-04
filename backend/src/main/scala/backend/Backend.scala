@@ -28,4 +28,7 @@ object Backend extends App {
   
   // Deploy actors and services
   FactorialBackend startOn system
+  
+  
+  system.awaitTermination()
 }
