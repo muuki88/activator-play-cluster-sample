@@ -15,7 +15,7 @@ import api.FactorialService._
  *
  * Forwards calculation to the cluster andreturns results to the websocket
  */
-class FactorialActor(out: ActorRef) extends Actor with ActorLogging {
+class FactorialWebsocketActor(websocket: ActorRef) extends Actor with ActorLogging {
 
   /**
    * Selects the local factorialService actor.
@@ -28,7 +28,7 @@ class FactorialActor(out: ActorRef) extends Actor with ActorLogging {
 
   def receive = {
     case calc: Compute  => service ! calc // calculate it
-    case result: Result => out ! result // promote result
+    case result: Result => websocket ! result // promote result
   }
 
 }
@@ -36,12 +36,12 @@ class FactorialActor(out: ActorRef) extends Actor with ActorLogging {
 /**
  * Contains props and formats
  */
-object FactorialActor {
+object FactorialWebsocketActor {
 
   /**
    * How to create the websocket actor
    */
-  def props(out: ActorRef) = Props(classOf[FactorialActor], out)
+  def props(out: ActorRef) = Props(classOf[FactorialWebsocketActor], out)
 
   // BigInt conversions
   val bigIntReads: Reads[BigInt] = Reads[BigInt] {

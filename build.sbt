@@ -1,6 +1,6 @@
 val commonSettings = Seq(
   organization := "your.organization",
-  version := "2.3.9",
+  version := "2.3.10",
   scalaVersion := "2.11.6",
   
   // build info
