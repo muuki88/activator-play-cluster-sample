@@ -14,7 +14,7 @@ import play.api.test._
 import akka.testkit._
 import actors.services.FactorialService
 import play.api.libs.concurrent.Akka
-import actors.services.FactorialActor
+import actors.services.FactorialWebsocketActor
 import akka.actor.ActorDSL._
 import akka.actor._
 
@@ -31,6 +31,7 @@ class FactorialSpec extends PlaySpec with OneServerPerSuite with BeforeAndAfterA
         "akka.cluster.roles.0" -> "frontend",
         "akka.cluster.roles.1" -> "backend",
         "akka.log-dead-letters" -> "0",
+        "akka.actor.deployment./factorialService/factorialWorkerRouter.cluster.allow-local-routees" -> "on",
         "log-dead-letters-during-shutdown" -> "off",
         "akka.loglevel" -> "ERROR"
       ),
@@ -57,7 +58,7 @@ class FactorialSpec extends PlaySpec with OneServerPerSuite with BeforeAndAfterA
     val messages = inbox()
 
     // factorial websocket actor
-    val socket = system.actorOf(FactorialActor.props(messages.getRef))
+    val socket = system.actorOf(FactorialWebsocketActor.props(messages.getRef))
 
     "return a Result on Compute" in {
       eventually {
