@@ -1,14 +1,17 @@
+import NativePackagerHelper._
+
 val commonSettings = Seq(
   organization := "your.organization",
   version := "2.3.10",
   scalaVersion := "2.11.6",
+  //scalaVersion := "2.10.4",
   
   // build info
   buildInfoPackage := "meta",
   buildInfoOptions += BuildInfoOption.ToJson,
   buildInfoKeys := Seq[BuildInfoKey](
     name, version, scalaVersion,
-    "sbtNativePackager" -> "1.0.0-RC2"
+    "sbtNativePackager" -> "1.0.0"
   )
 )
 
@@ -19,7 +22,7 @@ lazy val root = (project in file("."))
   .aggregate(api, frontend, backend)
   
 lazy val frontend = (project in file("frontend"))
-    .enablePlugins(PlayScala, BuildInfoPlugin)
+    .enablePlugins(PlayScala, BuildInfoPlugin, JavaAppPackaging)
     .settings(
         name := "cluster-play-frontend",
         libraryDependencies ++= (Dependencies.frontend  ++ Seq(filters, cache)),
@@ -29,11 +32,16 @@ lazy val frontend = (project in file("frontend"))
             "-Djava.library.path=" + (baseDirectory.value.getParentFile() / "backend" / "sigar" ).getAbsolutePath, 
             "-Xms128m", "-Xmx1024m"),
         fork in run := true,
+        mappings in Universal ++= directory(baseDirectory.value.getParentFile / "backend" / "sigar"),
+        bashScriptExtraDefines ++= Seq(
+          """declare -r sigar_dir="$(realpath "${app_home}/../sigar")"""",
+          """addJava "-Djava.library.path=${sigar_dir}""""
+        ),
         commonSettings
     ).dependsOn(api)
 
 lazy val backend = (project in file("backend"))
-    .enablePlugins(BuildInfoPlugin)
+    .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
         name := "cluster-akka-backend",
         libraryDependencies ++= Dependencies.backend,
@@ -42,6 +50,11 @@ lazy val backend = (project in file("backend"))
             "-Xms128m", "-Xmx1024m"),
         // this enables custom javaOptions
         fork in run := true,
+        mappings in Universal ++= directory(baseDirectory.value / "sigar"),
+        bashScriptExtraDefines ++= Seq(
+          """declare -r sigar_dir="$(realpath "${app_home}/../sigar")"""",
+          """addJava "-Djava.library.path=${sigar_dir}""""
+        ),
         commonSettings
     ).dependsOn(api)
     
