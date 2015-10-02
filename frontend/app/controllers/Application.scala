@@ -23,7 +23,7 @@ object Application extends Controller {
   def jsRoutes(varName: String = "jsRoutes") = Cached(_ => "jsRoutes", duration = 86400) {
     Action { implicit request =>
       Ok(
-        Routes.javascriptRouter(varName)(
+        routing.JavaScriptReverseRouter(varName)(
             routes.javascript.Cluster.clusterNodesWebsocket,
             routes.javascript.Cluster.clusterMetricsWebsocket,
             services.routes.javascript.Factorial.websocket

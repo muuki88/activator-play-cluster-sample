@@ -19,7 +19,7 @@ class WorkerActor extends Actor with ActorLogging {
   import context.dispatcher
 
   def receive = {
-    case Compute(n: Int) => Future(factorial(n)) map { Result(_) } pipeTo sender()
+    case Compute(n: Int) => Future(factorial(n)) map { Result } pipeTo sender()
   }
 
   def factorial(n: Int): BigInt = {
