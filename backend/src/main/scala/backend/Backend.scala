@@ -4,6 +4,8 @@ import akka.actor._
 import com.typesafe.config.ConfigFactory
 import backend.factorial._
 import scala.collection.JavaConversions._
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 /**
  * Booting a cluster backend node with all actors
@@ -28,7 +30,6 @@ object Backend extends App {
   
   // Deploy actors and services
   FactorialBackend startOn system
-  
-  
-  system.awaitTermination()
+
+  Await.result(system.whenTerminated, Duration.Inf)
 }

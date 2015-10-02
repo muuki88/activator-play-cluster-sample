@@ -2,8 +2,8 @@ import NativePackagerHelper._
 
 val commonSettings = Seq(
   organization := "your.organization",
-  version := "2.3.10",
-  scalaVersion := "2.11.6",
+  version := "2.4.3",
+  scalaVersion := "2.11.7",
   //scalaVersion := "2.10.4",
   
   // build info
@@ -29,7 +29,7 @@ lazy val frontend = (project in file("frontend"))
         pipelineStages := Seq(rjs, digest, gzip),
         RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:")),
         javaOptions ++= Seq(
-            "-Djava.library.path=" + (baseDirectory.value.getParentFile() / "backend" / "sigar" ).getAbsolutePath, 
+            "-Djava.library.path=" + (baseDirectory.value.getParentFile / "backend" / "sigar" ).getAbsolutePath,
             "-Xms128m", "-Xmx1024m"),
         fork in run := true,
         mappings in Universal ++= directory(baseDirectory.value.getParentFile / "backend" / "sigar"),
@@ -46,7 +46,7 @@ lazy val backend = (project in file("backend"))
         name := "cluster-akka-backend",
         libraryDependencies ++= Dependencies.backend,
         javaOptions ++= Seq(
-            "-Djava.library.path=" + (baseDirectory.value / "sigar").getAbsolutePath, 
+            "-Djava.library.path=" + (baseDirectory.value / "sigar").getAbsolutePath,
             "-Xms128m", "-Xmx1024m"),
         // this enables custom javaOptions
         fork in run := true,
@@ -71,7 +71,7 @@ lazy val api = (project in file("api"))
 // If this project is only a subproject, add these to a common project setting.
 //
 scalacOptions in ThisBuild ++= Seq(
-  "-target:jvm-1.7",
+  "-target:jvm-1.8",
   "-encoding", "UTF-8",
   "-deprecation", // warning and location for usages of deprecated APIs
   "-feature", // warning and location for usages of features that should be imported explicitly

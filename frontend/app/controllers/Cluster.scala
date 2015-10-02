@@ -10,10 +10,10 @@ import models.Metrics
 object Cluster extends Controller {
 
   def clusterNodesWebsocket = WebSocket.acceptWithActor[JsValue, JsValue] { implicit request =>
-    MonitorActor.props(_)
+    MonitorActor.props
   }
   
   def clusterMetricsWebsocket = WebSocket.acceptWithActor[JsValue, Metrics.NodeMetric] { implicit request =>
-    MetricsActor.props(_)
+    MetricsActor.props
   }
 }
